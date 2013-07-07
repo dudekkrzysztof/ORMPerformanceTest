@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,7 +56,12 @@
     <Compile Include="EF\Home.cs" />
     <Compile Include="EF\Province.cs" />
     <Compile Include="EF\TestEF.cs" />
+    <Compile Include="Helpers\Const.cs" />
     <Compile Include="ITest.cs" />
+    <Compile Include="Massive\Massive.cs" />
+    <Compile Include="Massive\Model\Home.cs" />
+    <Compile Include="Massive\Model\Province.cs" />
+    <Compile Include="Massive\TestMassive.cs" />
     <Compile Include="Peta\Home.cs" />
     <Compile Include="Peta\Models\Generated\Database.cs">
       <AutoGen>True</AutoGen>

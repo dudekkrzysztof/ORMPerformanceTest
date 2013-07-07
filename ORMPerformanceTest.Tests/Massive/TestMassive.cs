@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using ORMPerformanceTest.TestData;
+using Massive.Model;
+using ORMPerformanceTest.Tests;
 using ORMPerformanceTest.Tests.Bulk;
 using ORMPerformanceTest.Tests.Helpers;
+using Home = Massive.Model.Home;
 
-namespace ORMPerformanceTest.Tests.Peta
+namespace Massive
 {
-    public class TestPeta : ITest
+    public class TestMassive : ITest
     {
-        public TestPeta()
+        public TestMassive()
         {
-            TestKind = "Peta Poco";
+            TestKind = "Massive";
         }
+
         public string TestKind { get; private set; }
         public TestResult Count(string connectionString)
         {
@@ -47,20 +51,20 @@ namespace ORMPerformanceTest.Tests.Peta
         }
         public void InitDataBase(string connectionString)
         {
-            var db = new PetaPoco.Database(connectionString, "System.Data.SqlClient");
-            db.Execute(Const.DBCreateScript);
-            foreach (var province in ProvinceData.GetProvinces())
+            DB.Current.Execute(Const.DBCreateScript);
+            Dictionary<int, int> provinces = new Dictionary<int, int>();
+            var table = new Province("ORMTest");
+            foreach (var province in ORMPerformanceTest.TestData.ProvinceData.GetProvinces())
             {
-                db.Insert("Province", "Id", new{Name = province.Name, Code = province.Code});
+                var dbProvince = table.Insert(new { Code = province.Code, Name = province.Name });
+                provinces.Add(province.Code, (int)dbProvince.ID);
             }
-            var provinces = db.Query<dynamic>(@"SELECT *  
-from Province").ToList();
             BulkUploadToSql bulk =
                    BulkUploadToSql.Load(
-                       HomeData.GetHomes()
+                      ORMPerformanceTest.TestData.HomeData.GetHomes()
                            .Select(
                                i =>
-                                   new Bulk.Home
+                                   new ORMPerformanceTest.Tests.Bulk.Home
                                    {
                                        AddTime = DateTime.Now,
                                        BuildYear = i.BuildYear,
@@ -68,50 +72,47 @@ from Province").ToList();
                                        Description = i.Description,
                                        Price = i.Price,
                                        Surface = i.Surface,
-                                       ProvinceId = provinces.First(j => j.Code == i.HomeProvince.Code).Id,
+                                       ProvinceId = provinces[i.HomeProvince.Code],
                                    }), "Home", 10000, connectionString);
             bulk.Flush();
-
         }
-
         #region [Private]
         private static int CountTest(string connectionString)
         {
-            var db = new PetaPoco.Database(connectionString, "System.Data.SqlClient");
-            long count = db.ExecuteScalar<long>("SELECT Count(*) FROM Home");
+            var table = new Home("ORMTest");
+            long count = table.Count();
             return 1;
         }
 
         private static int SelectAllTest(string connectionString)
         {
-            var db = new PetaPoco.Database(connectionString, "System.Data.SqlClient");
-            return db.Query<Home>("SELECT * FROM Home").ToList().Count();
+            var table = new Home("ORMTest");
+            return table.All().Count();
         }
 
         private static int SelectPartTest(string connectionString)
         {
-            var db = new PetaPoco.Database(connectionString, "System.Data.SqlClient");
-            return db.Query<Home>("SELECT * FROM Home where BuildYear<@0", 2000).ToList().Count();
+            var table = new Home("ORMTest");
+            return table.All(where: "where BuildYear<@0", args: 2000).Count();
         }
 
         private static int SelectJoinTest(string connectionString)
         {
-            var db = new PetaPoco.Database(connectionString, "System.Data.SqlClient");
-            return db.Query<dynamic>(@"SELECT h.*  
+            var table = new Home("ORMTest");
+            return table.Query(@"SELECT h.*  
 from Home h
 inner join Province p on h.ProvinceId=p.Id
-where p.Code=@0", 10).ToList().Count();
+where p.Code=@0", 10).Count();
         }
 
         private static int InsertTest(string connectionString)
         {
-            Home pocoHome;
-            var db = new PetaPoco.Database(connectionString, "System.Data.SqlClient");
-            var provinces = db.Query<dynamic>(@"SELECT *  
-from Province");
-            foreach (var home in HomeData.Get100Homes())
+            var table = new Home("ORMTest");
+            var provinces = new Province("ORMTest").All();
+
+            foreach (var home in ORMPerformanceTest.TestData.HomeData.Get100Homes())
             {
-                pocoHome = new Home
+                table.Insert(new
                 {
                     BuildYear = home.BuildYear,
                     City = home.City,
@@ -120,42 +121,29 @@ from Province");
                     Price = home.Price,
                     Surface = home.Surface,
                     AddTime = DateTime.Now
-                };
-                db.Insert("Home", "Id", pocoHome);
+                });
             }
             return 100;
         }
 
         private static int Update100Test(string connectionString)
         {
-            var db = new PetaPoco.Database(connectionString, "System.Data.SqlClient");
-            var homes = db.Query<Home>("SELECT * FROM home WHERE BuildYear=@0", 2014).ToList();
-            int count = homes.Count();
-            foreach (var home in homes)
+            var table = new Home("ORMTest");
+            var toUpdate = table.All("WHERE BuildYear=@0", args: 2014).ToArray();
+            int counter = 0;
+            foreach (var home in toUpdate)
             {
-                if (home != null)
-                {
-                    home.BuildYear = 2015;
-                    db.Update("Home", "Id", home);
-                }
+                home.BuildYear = 2015;
+                counter++;
             }
-            return count;
+            table.Save(toUpdate);
+            return counter;
         }
 
         private static int Delete100Test(string connectionString)
         {
-            var db = new PetaPoco.Database(connectionString, "System.Data.SqlClient");
-            var homes = db.Query<Home>("SELECT * FROM home WHERE BuildYear=@0", 2015).ToList();
-            int count = homes.Count();
-            foreach (var home in homes)
-            {
-                if (home != null)
-                {
-                    home.BuildYear = 2015;
-                    db.Delete("Home", "Id", home);
-                }
-            }
-            return count;
+            var table = new Home("ORMTest");
+            return table.Delete(where: "WHERE BuildYear=@0", args: 2015);
         }
         #endregion [Private]
     }

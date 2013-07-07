@@ -115,18 +115,32 @@ namespace ORMPerformanceTest.Tests.EF
         private static int SelectPartTest(string connectionString)
         {
             List<Home> count;
-            using (var ctx = new Context(connectionString))
+            try
             {
-                count = ctx.Homes.Where(h => h.BuildYear < 2000).ToList();
+                using (var ctx = new Context(connectionString))
+                {
+                    count = ctx.Homes.Where(h => h.BuildYear < 2000).ToList();
+                }
+            }
+            catch (OutOfMemoryException)
+            {
+                return 0;
             }
             return count.Count;
         }
         private static int SelectJoinTest(string connectionString)
         {
             List<Home> count;
-            using (var ctx = new Context(connectionString))
+            try
             {
-                count = ctx.Homes.Where(h => h.HomeProvince.Code == 10).ToList();
+                using (var ctx = new Context(connectionString))
+                {
+                    count = ctx.Homes.Where(h => h.HomeProvince.Code == 10).ToList();
+                }
+            }
+            catch (OutOfMemoryException)
+            {
+                return 0;
             }
             return count.Count;
         }
