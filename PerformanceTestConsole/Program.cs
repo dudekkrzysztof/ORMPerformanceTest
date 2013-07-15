@@ -2,10 +2,10 @@
 using System.Configuration;
 using Massive;
 using ORMPerformanceTest.Tests.Ado;
-using ORMPerformanceTest.Tests.Bulk;
 using ORMPerformanceTest.Tests.EF;
 using ORMPerformanceTest.Tests.Helpers;
 using ORMPerformanceTest.Tests.Peta;
+using ORMPerformanceTest.Tests.Simple.Data;
 
 namespace PerformanceTestConsole
 {
@@ -18,6 +18,7 @@ namespace PerformanceTestConsole
             TestEF ef = new TestEF();
             TestPeta peta = new TestPeta();
             TestMassive massive = new TestMassive();
+            TestSimpleData simple = new TestSimpleData();
             TestResult result;
 
             ef.InitDataBase(connection);
@@ -66,6 +67,22 @@ namespace PerformanceTestConsole
             result = peta.Update100(connection);
             Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
             result = peta.Delete100(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+
+            simple.InitDataBase(connection);
+            result = simple.Insert(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = simple.Count(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = simple.SelectAll(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = simple.SelectPart(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = simple.SelectJoin(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = simple.Update100(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = simple.Delete100(connection);
             Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
 
             ado.InitDataBase(connection);
