@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.0.0-beta1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -63,6 +66,8 @@
     <Compile Include="Ado\Home.cs" />
     <Compile Include="Bulk\BulkUploadToSql.cs" />
     <Compile Include="Bulk\Home.cs" />
+    <Compile Include="Dapper\Home.cs" />
+    <Compile Include="Dapper\TestDapper.cs" />
     <Compile Include="EF\Configuration .cs" />
     <Compile Include="EF\Context.cs" />
     <Compile Include="EF\Home.cs" />
@@ -107,6 +112,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

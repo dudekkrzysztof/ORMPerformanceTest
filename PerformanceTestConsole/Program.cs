@@ -2,6 +2,7 @@
 using System.Configuration;
 using Massive;
 using ORMPerformanceTest.Tests.Ado;
+using ORMPerformanceTest.Tests.Dapper;
 using ORMPerformanceTest.Tests.EF;
 using ORMPerformanceTest.Tests.Helpers;
 using ORMPerformanceTest.Tests.Peta;
@@ -19,6 +20,7 @@ namespace PerformanceTestConsole
             TestPeta peta = new TestPeta();
             TestMassive massive = new TestMassive();
             TestSimpleData simple = new TestSimpleData();
+            TestDapper dapper = new TestDapper();
             TestResult result;
 
             ef.InitDataBase(connection);
@@ -67,6 +69,22 @@ namespace PerformanceTestConsole
             result = peta.Update100(connection);
             Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
             result = peta.Delete100(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+
+            dapper.InitDataBase(connection);
+            result = dapper.Insert(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = dapper.Count(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = dapper.SelectAll(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = dapper.SelectPart(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = dapper.SelectJoin(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = dapper.Update100(connection);
+            Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
+            result = dapper.Delete100(connection);
             Console.WriteLine("{1} {2} {3} Test: {0} trwal: {1} milisec co daje na sekunde {2}", result.Label, result.TimeInMilisecond, result.RowPerSec, result.AfectedRecord);
 
             simple.InitDataBase(connection);
