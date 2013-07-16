@@ -92,7 +92,8 @@ namespace ORMPerformanceTest.Tests.EF
             int count;
             using (var ctx = new Context(connectionString))
             {
-                count = ctx.Homes.Count();
+                
+                count = ctx.Homes.AsNoTracking().Count();
             }
             return 1;
         }
@@ -103,7 +104,7 @@ namespace ORMPerformanceTest.Tests.EF
             {
                 using (var ctx = new Context(connectionString))
                 {
-                    count = ctx.Homes.ToList();
+                    count = ctx.Homes.AsNoTracking().ToList();
                 }
             }
             catch (OutOfMemoryException)
@@ -119,7 +120,7 @@ namespace ORMPerformanceTest.Tests.EF
             {
                 using (var ctx = new Context(connectionString))
                 {
-                    count = ctx.Homes.Where(h => h.BuildYear < 2000).ToList();
+                    count = ctx.Homes.AsNoTracking().Where(h => h.BuildYear < 2000).ToList();
                 }
             }
             catch (OutOfMemoryException)
@@ -135,7 +136,7 @@ namespace ORMPerformanceTest.Tests.EF
             {
                 using (var ctx = new Context(connectionString))
                 {
-                    count = ctx.Homes.Where(h => h.HomeProvince.Code == 10).ToList();
+                    count = ctx.Homes.AsNoTracking().Where(h => h.HomeProvince.Code == 10).ToList();
                 }
             }
             catch (OutOfMemoryException)
