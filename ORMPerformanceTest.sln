@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORMPerformanceTest.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTestConsole", "PerformanceTestConsole\PerformanceTestConsole.csproj", "{C03636B1-343E-473B-96EC-5911BF5883F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORMPerformanceTest.TestExecutor", "ORMPerformanceTest.TestExecutor\ORMPerformanceTest.TestExecutor.csproj", "{719630C8-E45B-46FB-9CDB-D3B965B2A936}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,12 @@ Global
 		{C03636B1-343E-473B-96EC-5911BF5883F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C03636B1-343E-473B-96EC-5911BF5883F5}.Release-Mono|Any CPU.ActiveCfg = Release|Any CPU
 		{C03636B1-343E-473B-96EC-5911BF5883F5}.Release-Mono|Any CPU.Build.0 = Release|Any CPU
+		{719630C8-E45B-46FB-9CDB-D3B965B2A936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{719630C8-E45B-46FB-9CDB-D3B965B2A936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{719630C8-E45B-46FB-9CDB-D3B965B2A936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{719630C8-E45B-46FB-9CDB-D3B965B2A936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{719630C8-E45B-46FB-9CDB-D3B965B2A936}.Release-Mono|Any CPU.ActiveCfg = Release|Any CPU
+		{719630C8-E45B-46FB-9CDB-D3B965B2A936}.Release-Mono|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
