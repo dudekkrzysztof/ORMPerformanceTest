@@ -92,7 +92,6 @@ namespace ORMPerformanceTest.Tests.EF
             int count;
             using (var ctx = new Context(connectionString))
             {
-                
                 count = ctx.Homes.AsNoTracking().Count();
             }
             return 1;
@@ -157,9 +156,9 @@ namespace ORMPerformanceTest.Tests.EF
                     if (home != null)
                     {
                         home.BuildYear = 2015;
-                        ctx.SaveChanges();
                     }
                 }
+                ctx.SaveChanges();
             }
             return count;
         }

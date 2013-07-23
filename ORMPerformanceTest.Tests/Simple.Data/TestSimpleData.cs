@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using ORMPerformanceTest.Tests.Helpers;
-using PetaPoco;
-using Simple.Data;
 using Simple.Data.Ado;
 using Simple.Data.SqlServer;
 using Database = Simple.Data.Database;
@@ -65,7 +63,7 @@ namespace ORMPerformanceTest.Tests.Simple.Data
                     command.ExecuteNonQuery();
                 }
             }
-            foreach (var province in ORMPerformanceTest.TestData.ProvinceData.GetProvinces())
+            foreach (var province in TestData.ProvinceData.GetProvinces())
             {
                 db.Province.Insert(new { Name = province.Name, Code = province.Code });
             }
@@ -131,7 +129,7 @@ namespace ORMPerformanceTest.Tests.Simple.Data
                 prowinceDictionary.Add(province.Code, province.Id);
             }
 
-            foreach (var home in ORMPerformanceTest.TestData.HomeData.Get100Homes())
+            foreach (var home in TestData.HomeData.Get100Homes())
             {
                 db.Home.Insert(new
                 {
