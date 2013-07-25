@@ -13,5 +13,6 @@ namespace ORMPerformanceTest.Tests
         TestResult Update100(string connectionString);
         TestResult Delete100(string connectionString);
         void InitDataBase(string connectionString);
+        int Priority { get; }
     }
 }

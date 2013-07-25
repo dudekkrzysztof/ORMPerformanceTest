@@ -30,8 +30,6 @@ namespace ORMPerformanceTest.Tests.Bulk
             InitializeStructures();
         }
 
-        private BulkUploadToSql() :
-            this("MyTableName", 1000, "ORM") { }
         private void InitializeStructures()
         {
             this.dataTable.Columns.Add("Id", typeof(Int32));

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Data.SqlClient;
 using System.Linq;
 using ORMPerformanceTest.TestData;
@@ -8,6 +9,7 @@ using ORMPerformanceTest.Tests.Helpers;
 
 namespace ORMPerformanceTest.Tests.Ado
 {
+    [Export(typeof(ITest))]
     public class TestAdo : ITest
     {
         public TestAdo()
@@ -97,6 +99,9 @@ namespace ORMPerformanceTest.Tests.Ado
                                     }), "Home", 10000, connectionString);
             bulk.Flush();
         }
+
+        public int Priority { get { return 2; } }
+
         #region [private]
 
         private static int CountTest(string connectionString)

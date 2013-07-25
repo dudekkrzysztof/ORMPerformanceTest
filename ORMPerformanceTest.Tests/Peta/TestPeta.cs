@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Linq;
 using ORMPerformanceTest.TestData;
 using ORMPerformanceTest.Tests.Bulk;
@@ -6,6 +7,7 @@ using ORMPerformanceTest.Tests.Helpers;
 
 namespace ORMPerformanceTest.Tests.Peta
 {
+    [Export(typeof(ITest))]
     public class TestPeta : ITest
     {
         public TestPeta()
@@ -73,6 +75,8 @@ from Province").ToList();
             bulk.Flush();
 
         }
+
+        public int Priority { get { return 2; } }
 
         #region [Private]
         private static int CountTest(string connectionString)

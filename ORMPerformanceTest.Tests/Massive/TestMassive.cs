@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using Massive.Model;
 using ORMPerformanceTest.Tests;
@@ -9,6 +10,7 @@ using Home = Massive.Model.Home;
 
 namespace Massive
 {
+    [Export(typeof(ITest))]
     public class TestMassive : ITest
     {
         public TestMassive()
@@ -76,6 +78,8 @@ namespace Massive
                                    }), "Home", 10000, connectionString);
             bulk.Flush();
         }
+
+        public int Priority { get { return 2; } }
         #region [Private]
         private static int CountTest(string connectionString)
         {

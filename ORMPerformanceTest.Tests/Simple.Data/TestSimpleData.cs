@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Data.SqlClient;
 using System.Linq;
 using ORMPerformanceTest.Tests.Helpers;
@@ -9,6 +10,7 @@ using Database = Simple.Data.Database;
 
 namespace ORMPerformanceTest.Tests.Simple.Data
 {
+    [Export(typeof(ITest))]
     public class TestSimpleData : ITest
     {
         public TestSimpleData()
@@ -89,6 +91,8 @@ namespace ORMPerformanceTest.Tests.Simple.Data
                                    }), "Home", 10000, connectionString);
             bulk.Flush();
         }
+
+        public int Priority { get { return 2; } }
 
         #region [Private]
         private static int CountTest(string connectionString)

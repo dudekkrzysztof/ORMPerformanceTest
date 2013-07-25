@@ -1,14 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using Massive;
 using ORMPerformanceTest.Tests;
-using ORMPerformanceTest.Tests.Ado;
-using ORMPerformanceTest.Tests.Dapper;
-using ORMPerformanceTest.Tests.EF;
 using ORMPerformanceTest.Tests.Helpers;
-using ORMPerformanceTest.Tests.Peta;
-using ORMPerformanceTest.Tests.Simple.Data;
 
 namespace ORMPerformanceTest.TestExecutor
 {
@@ -25,15 +19,7 @@ namespace ORMPerformanceTest.TestExecutor
         private List<TestResult> _deleteResult;
         public Executor(int runCount = 5)
         {
-            _tests = new List<ITest>
-            {
-                new TestEF(),
-                new TestAdo(),
-                new TestDapper(),
-                new TestMassive(),
-                new TestPeta(),
-                new TestSimpleData()
-            };
+            _tests = MefHelper.GetExport().OrderBy(i=>i.Priority).ToList();
             _runCount = runCount;
         }
 

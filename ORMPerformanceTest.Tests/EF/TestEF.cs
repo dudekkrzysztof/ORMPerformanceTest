@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using ORMPerformanceTest.TestData;
 using ORMPerformanceTest.Tests.Bulk;
@@ -7,6 +8,7 @@ using ORMPerformanceTest.Tests.Helpers;
 
 namespace ORMPerformanceTest.Tests.EF
 {
+    [Export(typeof(ITest))]
     public class TestEF : ITest
     {
         public TestEF()
@@ -85,6 +87,8 @@ namespace ORMPerformanceTest.Tests.EF
             }
 
         }
+
+        public int Priority { get { return -2; } }
 
         #region [private]
         private static int CountTest(string connectionString)
